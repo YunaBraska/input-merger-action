@@ -5,10 +5,9 @@ const github = require('@actions/github');
 
 type ResultType = string | number | boolean | null;
 try {
-    console.log(JSON.stringify(github.context, null, 4));
     let result = run(new Map<string, ResultType>(), github.context);
-    //TODO: transform null to empty string
-    console.log(JSON.stringify(result, null, 4));
+    console.log(JSON.stringify(github.context, null, 4))
+    console.log(JSON.stringify(Object.fromEntries(result), null, 4));
 
     result.forEach((value, key) => {
         core.setOutput(key, value);

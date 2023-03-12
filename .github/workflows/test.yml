@@ -2,26 +2,32 @@ name: "TEST"
 
 on:
   repository_dispatch:
-    workflow_call:
-      inputs:
-        input_1:
-          type: string
-          required: false
-          default: 'default_1'
-        input_2:
-          type: string
-          required: false
-          default: 'default_2'
-    workflow_dispatch:
-      inputs:
-        input_1:
-          type: string
-          required: false
-          default: 'default_3'
-        input_2:
-          type: string
-          required: false
-          default: 'default_4'
+  workflow_call:
+    inputs:
+      input_1:
+        type: string
+        required: false
+        default: 'default_1'
+      input_2:
+        type: string
+        required: false
+        default: 'default_2'
+      input_3:
+        type: string
+        required: false
+  workflow_dispatch:
+    inputs:
+      input_1:
+        type: string
+        required: false
+        default: 'default_3'
+      input_2:
+        type: string
+        required: false
+        default: 'default_4'
+      input_3:
+        type: string
+        required: false
   push:
     tags-ignore:
       - '**'

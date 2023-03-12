@@ -1,0 +1,17 @@
+name: "TRIGGER WORKFLOW CALL"
+#type: Workflow Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_2:
+        type: string
+        description: "[input_2] default_2"
+        required: false
+
+jobs:
+  trigger_workflow_call:
+    name: "Trigger workflow call with input_2 [${{ inputs.input_2 }}]"
+    uses: YunaBraska/input-merger-action/.github/workflows/test.yml@main
+    with:
+      input_2: ${{ inputs.input_2 }}
