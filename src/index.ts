@@ -49,7 +49,7 @@ function addEventType(result: Map<string, ResultType>, context: any) {
             result.set('event_source', 'UI');
             break;
         case 'workflow_call':
-            result.set('event_source', 'WORKFLOW_TRIGGER');
+            result.set('event_source', 'WORKFLOW');
             break;
         default:
             result.set('event_source', 'WEBHOOK');

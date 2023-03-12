@@ -2,7 +2,7 @@ name: 'Input Merger Action'
 description: 'Combines user and default inputs for your workflows'
 outputs:
   event_source:
-    description: 'UI, WORKFLOW_TRIGGER, WEBHOOK'
+    description: 'UI, WORKFLOW, WEBHOOK'
   event_actor:
     description: 'The username of the user that triggered the initial workflow run'
   event_ref:
