@@ -49,7 +49,7 @@ jobs:
           echo input_2_C [${input_2_C}]
           echo "--------------------- ENVS ---------------------"
           env
-        with:
+        env:
           input_2_A: ${{ inputs.input_2 }}
           input_2_B: ${{ github.event.inputs.input_2 }}
           input_2_C: ${{ github.event.client_payload.input_2 }}
