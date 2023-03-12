@@ -1,0 +1,15 @@
+name: 'Input Merger Action'
+description: 'Combines user and default inputs for your workflows'
+outputs:
+  event_source:
+    description: 'UI, WORKFLOW_TRIGGER, WEBHOOK'
+  event_actor:
+    description: 'The username of the user that triggered the initial workflow run'
+  event_ref:
+    description: 'For a step executing an action, this is the ref of the action being executed. For example, v2'
+runs:
+  using: 'node16'
+  main: 'lib/index.js'
+branding:
+  icon: file-text
+  color: purple

@@ -1,0 +1,70 @@
+name: "TEST"
+
+on:
+  repository_dispatch:
+    workflow_call:
+      inputs:
+        input_1:
+          type: string
+          required: false
+          default: 'default_1'
+        input_2:
+          type: string
+          required: false
+          default: 'default_2'
+    workflow_dispatch:
+      inputs:
+        input_1:
+          type: string
+          required: false
+          default: 'default_3'
+        input_2:
+          type: string
+          required: false
+          default: 'default_4'
+  push:
+    tags-ignore:
+      - '**'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    steps:
+      - name: "Validate Input"
+        id: "inputs"
+        run: |
+          if [ "$GITHUB_ACTOR" != "YunaBraska" ]; then echo "Permission denied for user [$GITHUB_ACTOR]"; exit 1; fi
+          has_publish_to_code_climate=$(if [[ "${{secrets.CC_TEST_REPORTER_ID}}" == "" ]]; then echo "false"; else echo "true"; fi)
+          echo "has_publish_to_code_climate [$has_publish_to_code_climate]"
+          echo "has_publish_to_code_climate=$has_publish_to_code_climate" >> $GITHUB_OUTPUT
+          echo "--------------------- ENVS ---------------------"
+          env
+      - name: "Checkout"
+        uses: actions/checkout@main
+      - name: "Setup Node"
+        uses: actions/setup-node@main
+        with:
+          node-version: "16"
+          cache: npm
+      - name: "update dependencies"
+        run: |
+          npm outdated || true 
+          npm update --save
+          npm audit fix --force
+      - name: "Run Tests"
+        run: |
+          npm ci && npm run test:coverage
+      - name: "Read Input Info"
+        id: "input_info"
+        uses: YunaBraska/input-merger-action@main
+      - name: "Print Input Info"
+        run: |
+          echo "input_1      [${{ steps.input_info.outputs.input_1 }}]"
+          echo "input_2      [${{ steps.input_info.outputs.input_2 }}]"
+          echo "event_name   [${{ steps.input_info.outputs.event_name }}]"
+          echo "event_source [${{ steps.input_info.outputs.event_source }}]"
